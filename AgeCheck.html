@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title> Age check</title>
+  </head>
+  <body>
+    <!-- Root container for react components -->
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+      function UserInput() {
+        
+        const [person, setPerson] = React.useState({
+            name: "", 
+            age: 0
+        });
+        const [greeting, setGreeting] = React.useState("Please input your name and age");
+
+        const checkAge = (event) => {            
+            if (person.age >= 18) {
+                setGreeting(`Hello ${person.name}`);
+            } else {
+                setGreeting("You're too young");
+            }
+        };
+
+        return (
+          <div>
+            <div> {greeting} </div> <br></br>
+           <p>
+            Name: 
+            <input 
+                type="text"
+                placeholder="Name"
+                value={person.name}
+                onChange={event => setPerson({ ...person, name: event.target.value})} 
+            />  </p>
+            
+            <p> Age: 
+            <input
+                type="text"
+                placeholder="0"
+                value={person.age}
+                onChange={event => setPerson({ ...person, age: parseInt(event.target.value)})}
+            />
+            </p>
+            <button onClick= {checkAge}>Submit</button>
+            
+          </div>
+          
+          // arrow function () => is used to avoid infinite loop. The arrow function works as a reference.
+        );
+        
+      };
+      
+      
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<div><UserInput /></div>);    
+    </script>
+  </body>
+</html>

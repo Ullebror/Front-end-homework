@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title> User input demo</title>
+  </head>
+  <body>
+    <!-- Root container for react components -->
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+      function UserInput() {
+        const [person, setPerson] = React.useState({
+            firstName: "", 
+            lastName: ""
+        });
+
+        const alertButton = (event) => {
+            alert(`Hello ${person.firstName} ${person.lastName}`)
+        };
+
+        return (
+          <div>
+           
+
+            <input 
+                type="text"
+                placeholder="First Name"
+                value={person.firstName}
+                onChange={event => setPerson({ ...person, firstName: event.target.value})} 
+            />
+            <input
+                type="text"
+                placeholder="Last Name"
+                value={person.lastName}
+                onChange={event => setPerson({ ...person, lastName: event.target.value})}
+            />
+            <button onClick= {alertButton}>Send</button>
+            
+          </div>
+          
+          // arrow function () => is used to avoid infinite loop. The arrow function works as a reference.
+        );
+        
+      };
+      
+      
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<div><UserInput /></div>);    
+    </script>
+  </body>
+</html>

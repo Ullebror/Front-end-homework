@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Weather</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+      function Weather({}) {
+        const [data, setData] = React.useState({});
+        const [city, setCity] = React.useState("");
+        const inputChanged = (event) => {
+            setCity(event.target.value);
+        }
+        const showWeather = (event) => {
+            event.preventDefault(); 
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=0a132f797af858879dfc924538f4cba7&units=metric`)
+            .then(response => {
+                if (!response.ok)
+                    console.error("Something went wrong: " + response.statusText);
+
+                return response.json()
+            })
+            
+            .then(data => setData(data))
+            .catch(err => console.error(err))
+            
+         }
+            
+        
+        if (Object.keys(data).length === 0)  {
+            return(
+                <React.Fragment>
+                    <form onSubmit={showWeather}>
+                        <label>
+                            <input type="text" onChange={inputChanged} />
+                        </label>
+                        <input type="submit" value="Get weather"/>
+                    </form>
+                </React.Fragment>
+            );
+        } else {
+            return(
+                <React.Fragment>
+                    <form onSubmit={showWeather}>
+                        <label>
+                            <input type="text" onChange={inputChanged} />
+                        </label>
+                        <input type="submit" value="Get weather"/>
+                    </form>
+                    <h3> {city} weather</h3>
+                    <div> Temperature: {data.main.temp} Celsius </div>
+                    <div> Weather: {data.weather[0].main} </div>
+                    <img alt="weather icon" src={` https://openweathermap.org/img/wn/${data.weather[0].icon}.png`}/>
+
+                </React.Fragment>
+            );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<Weather />);
+    </script>
+  </body>
+</html>

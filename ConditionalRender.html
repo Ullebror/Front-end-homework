@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Development / React</title>
+  </head>
+  <body>
+    
+    <div id="root">    </div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script>text = "window.prompt('Enter text')"</script>
+    <script type="text/babel">
+      function ConditionalRender({text}) {
+            if (text.length <= 5) {
+               return (<div> {text}  </div>);
+            } else {
+                return (<div> Too long </div>);
+            }
+          
+        
+      }
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<ConditionalRender text = {window.prompt('Enter text')} />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trivia</title>
+  </head>
+  <body>
+    
+    <div id="root">    </div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    
+          
+           
+        
+    <script type="text/babel">
+        // How to get the question from here: data.result[0].question
+        function Trivia() {
+            const [data, setData] = React.useState({});
+            const triviaButton = (event) => {
+            fetch("https://opentdb.com/api.php?amount=1")
+            .then(response => {
+                if (!response.ok)
+                    console.error("Something went wrong: " + response.statusText);
+
+                return response.json()
+            })
+            
+            .then(data => setData(data))
+            .catch(err => console.error(err))
+        }
+            
+        if (Object.keys(data).length === 0)  {
+            return(
+            <React.Fragment>
+                
+                <button onClick={triviaButton}> New question</button>
+                
+            </React.Fragment>
+        )
+        } else {
+           return(
+            <React.Fragment>
+                <div> {data.results[0].question} </div> 
+                <br></br>
+                <button onClick={triviaButton}> New question</button>
+            </React.Fragment>
+           )
+
+        }
+        
+
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<Trivia />);
+    </script>
+  </body>
+</html>
