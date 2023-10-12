@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TodoList from './TodoList';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
@@ -10,13 +11,11 @@ function TabApp() {
 
     return (<div>
         <Tabs value={value} onChange={handleChange}>
-            <Tab value="one" label="Item One" />
-            <Tab value="two" label="Item Two" />
-            <Tab value="three" label="Item Three" />
+            <Tab value="one" label="Home" />
+            <Tab value="two" label="Todos" />
         </Tabs>
-        {value === 'one' &&  <div>Item One </div>}
-        {value === 'two' &&  <div>Item Two </div>}
-        {value === 'three' &&  <div>Item Three </div>}
+        {value === 'one' &&  <div>Hello World </div>}
+        {value === 'two' &&  <div> <TodoList /></div>}
     </div>
     );
 }
