@@ -1,5 +1,11 @@
 import { useState, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-material.css'; // Optional theme CSS
@@ -22,6 +28,11 @@ function TodoList() {
     setTodo({...todo, [event.target.name]: event.target.value});
   };
 
+  const changeDateFunc = (date) => {
+    date = date.toIsoString();
+    inputChanged(date);
+  }
+
   const addTodo = () => {
     setTodos([...todos, todo]);
     setTodo({description: '', date: '', priority: ''})
@@ -41,12 +52,23 @@ function TodoList() {
 
   return (
     <>
-        <h1> My Todos </h1>
-      <input type="text" onChange={inputChanged} placeholder="Description" name="description" value={todo.description}/>
-      <input onChange= {inputChanged} placeholder="Priority" name="priority" value={todo.priority}/>
-      <input type="date" onChange={inputChanged} placeholder="Date" name="date" value={todo.date}/>
-      <button onClick={addTodo}>Add Todo</button>
-      <button onClick={deleteTodo}>Delete</button>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Stack direction="row" spacing={2} justifyContent="center" alingItems="center">
+          <TextField
+            label="Description"
+            variant="standard"
+            name="description" value={todo.description}
+            onChange={inputChanged}/>
+          <TextField 
+            label="Priority"
+            variant="standard"
+            name="priority" value={todo.priority}
+            onChange={inputChanged}/>
+          <DatePicker value={todo.date} onChange={(date) => changeDateFunc(date)} />
+          <Button onClick={addTodo} variant="contained">Add </Button>
+          <Button onClick={deleteTodo} variant="contained">Delete</Button>
+        </Stack>
+      </LocalizationProvider>
 
 
       <div className='ag-theme-material' style={{ width: '100%', height: 500, alignItems: 'center'}}>
@@ -67,3 +89,13 @@ function TodoList() {
 }
 
 export default TodoList;
+
+/* <input type="text" onChange={inputChanged} placeholder="Description" name="description" value={todo.description}/>
+      <input onChange= {inputChanged} placeholder="Priority" name="priority" value={todo.priority}/>
+      <input type="date" onChange={inputChanged} placeholder="Date" name="date" value={todo.date}/> 
+      
+    <TextField 
+            label="Date"
+            variant="standard"
+            name="date" value={todo.date}
+            onChange={inputChanged}/>*/

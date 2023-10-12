@@ -5,7 +5,7 @@ function TodoTable(props) {
 
     return (
         <div>
-            <table>
+            <table >
                 <tbody>
                     <tr><th>Date</th><th>Priority</th><th>Description</th> </tr>
                     {
